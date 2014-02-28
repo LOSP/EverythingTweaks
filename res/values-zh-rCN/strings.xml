@@ -3,4 +3,10 @@
 	
 	<string name="app_des">为EverythingMe启动器编写的实用模块</string>
 	
+	<!-- Interface Settings -->
+	<string name="interface_title">界面</string>
+	<string name="interface_global">全局</string>
+	<string name="interface_global_translucent_bars_title">透明系统栏</string>
+	<string name="interface_global_translucent_bars_summary">状态栏/导航栏透明 (4.4以上)</string>
+	
 </resources>

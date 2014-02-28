@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+		android:title="@string/interface_global">
+		
+		<CheckBoxPreference
+			android:key="interface_global_translucent_bars"
+			android:title="@string/interface_global_translucent_bars_title"
+			android:summary="@string/interface_global_translucent_bars_summary" />
+		
+	</PreferenceCategory>
+
+</PreferenceScreen>
