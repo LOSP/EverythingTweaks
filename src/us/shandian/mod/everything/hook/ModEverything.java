@@ -27,12 +27,13 @@ public class ModEverything implements IXposedHookLoadPackage
 				@Override
 				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
 					Activity activity = (Activity) param.thisObject;
-					View mWorkspace = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mWorkspace").get(param.thisObject);
+					View mDragLayer = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mDragLayer").get(param.thisObject);
 					
 					// Translucent status on KitKat or above
 					if (Build.VERSION.SDK_INT >= 19) {
 						activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-						((View) mWorkspace.getParent()).setFitsSystemWindows(true);
+						mDragLayer.setFitsSystemWindows(true);
+						mDragLayer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 					}
 				}
 			});
