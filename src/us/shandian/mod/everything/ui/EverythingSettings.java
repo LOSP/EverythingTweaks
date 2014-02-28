@@ -13,7 +13,8 @@ public class EverythingSettings extends Activity
 {
 	// Constants
 	public static final int FRAGMENT_SETTINGS = 0;
-	public static final int FRAGMENT_NUM = 1;
+	public static final int FRAGMENT_INTERFACE = 1;
+	public static final int FRAGMENT_NUM = 2;
 	
 	private FragmentManager mManager;
 	
@@ -32,6 +33,7 @@ public class EverythingSettings extends Activity
 		
 		// Create all fragments
 		mFragments.add(FRAGMENT_SETTINGS, new SettingsFragment());
+		mFragments.add(FRAGMENT_INTERFACE, new InterfaceFragment());
 		
 		// Switch to default
 		switchTo(FRAGMENT_SETTINGS);

@@ -4,9 +4,12 @@ import android.preference.PreferenceFragment;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference;
+import android.widget.Toast;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.app.Activity;
+
+import us.shandian.mod.everything.R;
 
 public class BaseFragment extends PreferenceFragment implements OnPreferenceClickListener, OnPreferenceChangeListener
 {
@@ -44,7 +47,7 @@ public class BaseFragment extends PreferenceFragment implements OnPreferenceClic
 	}
 
 	@Override
-	public boolean onPreferenceChange(Preference preferencr, Object newValue) {
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		return false;
 	}
 	
@@ -52,8 +55,25 @@ public class BaseFragment extends PreferenceFragment implements OnPreferenceClic
 		getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
+	protected void disableReturn() {
+		getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+	}
+	
 	protected void setTitleResource(int id) {
 		getActivity().getActionBar().setTitle(getActivity().getResources().getString(id));
+	}
+	
+	protected void registerPreferences(Preference[] prefs) {
+		// Register listener to all Preferences
+		for (Preference pref : prefs) {
+			pref.setOnPreferenceChangeListener(this);
+			pref.setOnPreferenceClickListener(this);
+		}
+	}
+	
+	protected void needsRestart() {
+		// Show a message that says launcher needs restart
+		Toast.makeText(getActivity(), R.string.msg_restart, 2000).show();
 	}
 	
 	protected void switchTo(int fragment) {

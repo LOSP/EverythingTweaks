@@ -1,6 +1,7 @@
 package us.shandian.mod.everything.hook;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -12,10 +13,19 @@ import android.view.WindowManager;
 import android.os.Bundle;
 import android.os.Build;
 
-public class ModEverything implements IXposedHookLoadPackage
+import us.shandian.mod.everything.provider.SettingsProvider;
+
+public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteInit
 {
 	private static String EVERYTHINGME_PACKAGE_NAME = "me.everything.launcher";
 	private static String EVERYTHINGME_LAUNCHER = "me.everything.base.Launcher";
+
+	@Override
+	public void initZygote(IXposedHookZygoteInit.StartupParam param) throws Throwable
+	{
+		// Initialize global preferences
+		SettingsProvider.initZygote();
+	}
 	
 	@Override
 	public void handleLoadPackage(XC_LoadPackage.LoadPackageParam param) throws Throwable
@@ -29,8 +39,13 @@ public class ModEverything implements IXposedHookLoadPackage
 					Activity activity = (Activity) param.thisObject;
 					View mDragLayer = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mDragLayer").get(param.thisObject);
 					
+					// Reload settings first
+					SettingsProvider.reload();
+					
 					// Translucent status on KitKat or above
-					if (Build.VERSION.SDK_INT >= 19) {
+					if (Build.VERSION.SDK_INT >= 19 && 
+						SettingsProvider.getBoolean(SettingsProvider.INTERFACE_GLOBAL_TRANSLUCENT_BARS, true))
+					{
 						activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 						mDragLayer.setFitsSystemWindows(true);
 						mDragLayer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);

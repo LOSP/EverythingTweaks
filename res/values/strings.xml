@@ -8,6 +8,9 @@
 	<string name="interface_title">Interface</string>
 	<string name="interface_global">Global</string>
 	<string name="interface_global_translucent_bars_title">Translucent System Bars</string>
-	<string name="interface_global_translucent_bars_summary">Make statusbar and navigation bar transparent (KitKat and above)</string>
+	<string name="interface_global_translucent_bars_summary">StatusBar/NavigationBar Transparency (4.4 and above)</string>
+	
+	<!-- Messages -->
+	<string name="msg_restart">Changes will take effect after restarting launcher</string>
 
 </resources>
