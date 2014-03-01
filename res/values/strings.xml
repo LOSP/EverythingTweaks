@@ -10,6 +10,12 @@
 	<string name="interface_global_translucent_bars_title">Translucent System Bars</string>
 	<string name="interface_global_translucent_bars_summary">StatusBar/NavigationBar Transparency (4.4 and above)</string>
 	
+	<!-- Icon Pack -->
+	<string name="iconpack_title">Icon Pack</string>
+	<string name="iconpack_choose">Choose Icon Pack</string>
+	<string name="iconpack_default">Default</string>
+	<string name="iconpack_introduction">Introduction</string>
+	
 	<!-- Messages -->
 	<string name="msg_restart">Changes will take effect after restarting launcher</string>
 

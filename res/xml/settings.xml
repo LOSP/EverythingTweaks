@@ -6,4 +6,8 @@
 		android:key="interface"
 		android:title="@string/interface_title" />
 	
+	<Preference
+		android:key="iconpack"
+		android:title="@string/iconpack_title" />
+	
 </PreferenceScreen>

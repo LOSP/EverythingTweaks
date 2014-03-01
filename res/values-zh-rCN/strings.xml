@@ -9,6 +9,12 @@
 	<string name="interface_global_translucent_bars_title">透明系统栏</string>
 	<string name="interface_global_translucent_bars_summary">状态栏/导航栏透明 (4.4以上)</string>
 	
+	<!-- Icon Pack -->
+	<string name="iconpack_title">图标包</string>
+	<string name="iconpack_choose">选择图标包</string>
+	<string name="iconpack_default">默认</string>
+	<string name="iconpack_introduction">说明</string>
+	
 	<!-- Messages -->
 	<string name="msg_restart">设置将在重新启动启动器后生效</string>
 	

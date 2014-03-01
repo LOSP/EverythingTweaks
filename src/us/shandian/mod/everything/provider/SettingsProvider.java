@@ -13,6 +13,8 @@ public class SettingsProvider
 	
 	public static final String INTERFACE_GLOBAL_TRANSLUCENT_BARS = "interface_global_translucent_bars";
 	
+	public static final String ICONPACK_PACKAGE = "iconpack_package";
+	
 	private static XSharedPreferences mPrefs;
 	
 	public static void initZygote() {

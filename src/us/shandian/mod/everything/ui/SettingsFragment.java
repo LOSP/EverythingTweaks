@@ -7,8 +7,10 @@ import us.shandian.mod.everything.R;
 public class SettingsFragment extends BaseFragment
 {
 	private static final String INTERFACE = "interface";
+	private static final String ICONPACK = "iconpack";
 	
 	private Preference mInterface;
+	private Preference mIconPack;
 	
 	@Override
 	protected void initPreferences() {
@@ -17,10 +19,12 @@ public class SettingsFragment extends BaseFragment
 		
 		// Get all the prefs
 		mInterface = findPreference(INTERFACE);
+		mIconPack = findPreference(ICONPACK);
 		
 		// Register
 		registerPreferences(new Preference[] {
-			mInterface
+			mInterface,
+			mIconPack
 		});
 	}
 
@@ -34,6 +38,9 @@ public class SettingsFragment extends BaseFragment
 	public boolean onPreferenceClick(Preference preference) {
 		if (preference == mInterface) {
 			switchTo(EverythingSettings.FRAGMENT_INTERFACE);
+			return true;
+		} else if (preference == mIconPack) {
+			switchTo(EverythingSettings.FRAGMENT_ICONPACK);
 			return true;
 		} else {
 			return false;
