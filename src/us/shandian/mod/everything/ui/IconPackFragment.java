@@ -1,5 +1,6 @@
 package us.shandian.mod.everything.ui;
 
+import android.app.AlertDialog;
 import android.preference.Preference;
 import android.preference.ListPreference;
 
@@ -82,6 +83,20 @@ public class IconPackFragment extends BaseFragment
 			
 			needsRestart();
 			
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if (preference == mIntroduction) {
+			new  AlertDialog.Builder(getActivity())
+							.setTitle(R.string.iconpack_introduction)
+							.setMessage(R.string.iconpack_introduction_text)
+							.create()
+							.show();
 			return true;
 		} else {
 			return false;

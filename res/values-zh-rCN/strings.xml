@@ -14,6 +14,15 @@
 	<string name="iconpack_choose">选择图标包</string>
 	<string name="iconpack_default">默认</string>
 	<string name="iconpack_introduction">说明</string>
+	<string name="iconpack_introduction_text">"图标包功能支持以下启动器的图标包: \n
+Apex 启动器\n
+ADW 启动器\n
+...\n
+你可以在应用市场里搜索 "图标包"(Icon Pack) 来下载. \n
+安装好支持的图标包以后, 在这里选择它, 然后重启EverythingMe启动器. \n
+注意: 本功能并不完美, 一些桌面上(Workspace)上的图标不会被自动替换成图标包里面的, 所以你可能需要重新创建它们. \n
+鸣谢: \n
+Trebuchet(CyanogenMod)"</string>
 	
 	<!-- Messages -->
 	<string name="msg_restart">设置将在重新启动启动器后生效</string>

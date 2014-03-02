@@ -15,6 +15,15 @@
 	<string name="iconpack_choose">Choose Icon Pack</string>
 	<string name="iconpack_default">Default</string>
 	<string name="iconpack_introduction">Introduction</string>
+	<string name="iconpack_introduction_text">"Icon Pack feature supports Icon Packs of the following: \n
+Apex Launcher\n
+ADW Launcher\n
+...\n
+You may search for "icon pack" in Google Play to download them. \n
+Once you installed a supported icon pack, choose it here, and then restart EverythingMe Launcher. \n
+NOTICE: This feature is not perfect, and some of the icons in desktop(Workspace) will not be replaced with icon pack's automatically, so you may need to recreate them to make icon pack work on them. \n
+Special Thanks: \n
+Trebuchet(CyanogenMod)"</string>
 	
 	<!-- Messages -->
 	<string name="msg_restart">Changes will take effect after restarting launcher</string>
