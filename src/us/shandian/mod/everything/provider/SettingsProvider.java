@@ -12,6 +12,7 @@ public class SettingsProvider
 	public static final String PREFS = "preferences";
 	
 	public static final String INTERFACE_GLOBAL_TRANSLUCENT_BARS = "interface_global_translucent_bars";
+	public static final String INTERFACE_DRAWER_TRANSPARENT_BACKGROUND = "interface_drawer_transparent_background";
 	
 	public static final String ICONPACK_PACKAGE = "iconpack_package";
 	

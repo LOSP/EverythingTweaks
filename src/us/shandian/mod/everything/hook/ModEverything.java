@@ -13,7 +13,9 @@ import android.content.ComponentName;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,6 +33,7 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 	private static String EVERYTHINGME_PACKAGE_NAME = "me.everything.launcher";
 	private static String EVERYTHINGME_LAUNCHER = "me.everything.base.Launcher";
 	private static String EVERYTHINGME_ICON_CACHE = "me.everything.base.IconCache";
+	private static String EVERYTHINGME_APPS_CUSTOMIZE_TAB_HOST = "me.everything.base.AppsCustomizeTabHost";
 
 	@Override
 	public void initZygote(IXposedHookZygoteInit.StartupParam param) throws Throwable
@@ -118,6 +121,42 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
 					Method method = XposedHelpers.findMethodExact(EVERYTHINGME_ICON_CACHE, param.thisObject.getClass().getClassLoader(), "flush", new Class<?>[0]);
 					method.invoke(param.thisObject, new Object[0]);
+				}
+			});
+			
+			// Hooks for translucent All Apps page
+			XposedHelpers.findAndHookMethod(EVERYTHINGME_LAUNCHER, param.classLoader, "updateWallpaperVisibility", boolean.class, new XC_MethodHook() {
+				@Override
+				public void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+					// Reload settings and check
+					SettingsProvider.reload();
+					boolean transDrawer = SettingsProvider.getBoolean(SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND, true);
+					if (!transDrawer) return;
+					
+					View mDragLayer = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mDragLayer").get(param.thisObject);
+					mDragLayer.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					((View) mDragLayer.getParent()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					
+					View mWorkspace = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mWorkspace").get(param.thisObject);
+					mWorkspace.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					
+					param.args[0] = true;
+				}
+			});
+			
+			XposedHelpers.findAndHookMethod(EVERYTHINGME_APPS_CUSTOMIZE_TAB_HOST, param.classLoader, "onFinishInflate", new XC_MethodHook() {
+				@Override
+				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+					// Reload settings and check
+					SettingsProvider.reload();
+					boolean transDrawer = SettingsProvider.getBoolean(SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND, true);
+					if (!transDrawer) return;
+					
+					View mAnimationBuffer = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass(), "mAnimationBuffer").get(param.thisObject);
+					View thisView = (View) param.thisObject;
+					
+					mAnimationBuffer.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+					thisView.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				}
 			});
 		}

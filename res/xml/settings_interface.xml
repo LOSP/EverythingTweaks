@@ -11,5 +11,14 @@
 			android:summary="@string/interface_global_translucent_bars_summary" />
 		
 	</PreferenceCategory>
+	
+	<PreferenceCategory
+		android:title="@string/interface_drawer">
+
+		<CheckBoxPreference
+			android:key="interface_drawer_transparent_background"
+			android:title="@string/interface_drawer_transparent_background" />
+
+	</PreferenceCategory>
 
 </PreferenceScreen>

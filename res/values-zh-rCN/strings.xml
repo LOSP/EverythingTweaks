@@ -8,6 +8,8 @@
 	<string name="interface_global">全局</string>
 	<string name="interface_global_translucent_bars_title">透明系统栏</string>
 	<string name="interface_global_translucent_bars_summary">状态栏/导航栏透明 (4.4以上)</string>
+	<string name="interface_drawer">抽屉</string>
+	<string name="interface_drawer_transparent_background">透明背景</string>
 	
 	<!-- Icon Pack -->
 	<string name="iconpack_title">图标包</string>

@@ -10,6 +10,7 @@ import us.shandian.mod.everything.provider.SettingsProvider;
 public class InterfaceFragment extends BaseFragment
 {
 	private CheckBoxPreference mTransBars;
+	private CheckBoxPreference mTransDrawer;
 	
 	@Override
 	protected void initPreferences() {
@@ -18,10 +19,12 @@ public class InterfaceFragment extends BaseFragment
 		
 		// Get the Preferences
 		mTransBars = (CheckBoxPreference) findPreference(SettingsProvider.INTERFACE_GLOBAL_TRANSLUCENT_BARS);
+		mTransDrawer = (CheckBoxPreference) findPreference(SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND);
 		
 		// Register
 		registerPreferences(new Preference[] {
-			mTransBars
+			mTransBars,
+			mTransDrawer
 		});
 		
 		// Initialize default value
@@ -30,6 +33,11 @@ public class InterfaceFragment extends BaseFragment
 									true);
 		mTransBars.setChecked(transBars);
 		mTransBars.setEnabled(Build.VERSION.SDK_INT >= 19);
+		
+		boolean transDrawer = SettingsProvider.getBoolean(getActivity(), 
+									SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND,
+									true);
+		mTransDrawer.setChecked(transDrawer);
 	}
 
 	@Override
@@ -46,6 +54,12 @@ public class InterfaceFragment extends BaseFragment
 					mTransBars.isChecked());
 			needsRestart();
 			return true;
+		} else if (preference == mTransDrawer) {
+			SettingsProvider.putBoolean(getActivity(), 
+					SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND,
+					mTransDrawer.isChecked());
+			needsRestart();
+			return true;
 		} else {
 			return false;
 		}
@@ -56,6 +70,12 @@ public class InterfaceFragment extends BaseFragment
 		if (preference == mTransBars) {
 			SettingsProvider.putBoolean(getActivity(), 
 					SettingsProvider.INTERFACE_GLOBAL_TRANSLUCENT_BARS,
+					(Boolean) newValue);
+			needsRestart();
+			return true;
+		} else if (preference == mTransDrawer) {
+			SettingsProvider.putBoolean(getActivity(), 
+					SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND,
 					(Boolean) newValue);
 			needsRestart();
 			return true;

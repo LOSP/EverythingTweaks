@@ -9,6 +9,8 @@
 	<string name="interface_global">Global</string>
 	<string name="interface_global_translucent_bars_title">Translucent System Bars</string>
 	<string name="interface_global_translucent_bars_summary">StatusBar/NavigationBar Transparency (4.4 and above)</string>
+	<string name="interface_drawer">Drawer</string>
+	<string name="interface_drawer_transparent_background">Transparent Background</string>
 	
 	<!-- Icon Pack -->
 	<string name="iconpack_title">Icon Pack</string>
