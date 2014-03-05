@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Build;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import us.shandian.mod.everything.provider.SettingsProvider;
@@ -34,6 +35,7 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 	private static String EVERYTHINGME_LAUNCHER = "me.everything.base.Launcher";
 	private static String EVERYTHINGME_ICON_CACHE = "me.everything.base.IconCache";
 	private static String EVERYTHINGME_APPS_CUSTOMIZE_TAB_HOST = "me.everything.base.AppsCustomizeTabHost";
+	private static String EVERYTHINGME_APP_WIDGET_RESIZE_FRAME = "me.everything.base.AppWidgetResizeFrame";
 
 	@Override
 	public void initZygote(IXposedHookZygoteInit.StartupParam param) throws Throwable
@@ -47,7 +49,7 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 	{
 		// If we are in EverythingMe
 		if (EVERYTHINGME_PACKAGE_NAME.equals(param.packageName)) {
-			// Hook the create event
+			// Hook the create event ( for translucent bars )
 			XposedHelpers.findAndHookMethod(EVERYTHINGME_LAUNCHER, param.classLoader, "onCreate", Bundle.class, new XC_MethodHook() {
 				@Override
 				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
@@ -65,6 +67,20 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 						mDragLayer.setFitsSystemWindows(true);
 						mDragLayer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 					}
+				}
+			});
+			
+			Class<?> WidgetResizeFrame = XposedHelpers.findClass(EVERYTHINGME_APP_WIDGET_RESIZE_FRAME, param.classLoader);
+			XposedBridge.hookAllConstructors(WidgetResizeFrame, new XC_MethodHook() {
+				@Override
+				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+					int mWidgetPaddingTop = XposedHelpers.getIntField(param.thisObject, "mWidgetPaddingTop");
+					int mWidgetPaddingBottom = XposedHelpers.getIntField(param.thisObject, "mWidgetPaddingBottom");
+					int statusHeight = getStatusBarHeight((Context) param.args[0]);
+					mWidgetPaddingTop += statusHeight;
+					mWidgetPaddingBottom -= statusHeight;
+					XposedHelpers.setIntField(param.thisObject, "mWidgetPaddingTop", mWidgetPaddingTop);
+					XposedHelpers.setIntField(param.thisObject, "mWidgetPaddingBottom", mWidgetPaddingBottom);
 				}
 			});
 			
@@ -172,6 +188,24 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 			helper.loadIconPack(iconPack);
 			return true;
 		}
+	}
+	
+	// Returns the height of statusbar
+	public int getStatusBarHeight(Context context) {
+		Class<?> c = null;
+		Object obj = null;
+		Field field = null;
+		int x = 0, statusBarHeight = 0;
+		try {
+			c = Class.forName("com.android.internal.R$dimen");
+			obj = c.newInstance();
+			field = c.getField("status_bar_height");
+			x = Integer.parseInt(field.get(obj).toString());
+			statusBarHeight = context.getResources().getDimensionPixelSize(x);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return statusBarHeight;
 	}
 
 }
