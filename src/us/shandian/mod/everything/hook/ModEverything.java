@@ -19,6 +19,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.os.Bundle;
 import android.os.Build;
 
@@ -160,6 +161,32 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 				}
 			});
 			
+			XposedHelpers.findAndHookMethod(EVERYTHINGME_LAUNCHER, param.classLoader, "showAppsCustomizeHelper", boolean.class, boolean.class, new XC_MethodHook() {
+				@Override
+				public void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+					// Reload settings and check
+					SettingsProvider.reload();
+					boolean transDrawer = SettingsProvider.getBoolean(SettingsProvider.INTERFACE_DRAWER_TRANSPARENT_BACKGROUND, true);
+					if (!transDrawer) return;
+					
+					// Alpha Animation, for transparet drawer
+					View mWorkspace = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mWorkspace").get(param.thisObject);
+					mWorkspace.clearAnimation();
+					View mHotseat = (View) XposedHelpers.findField(param.thisObject.getClass().getSuperclass().getSuperclass(), "mHotseat").get(param.thisObject);
+					mHotseat.clearAnimation();
+					AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+					anim.setDuration(500);
+					mWorkspace.setAnimation(anim);
+					mHotseat.setAnimation(anim);
+					
+					// Change visibility after animation
+					mWorkspace.postDelayed(new AnimationEndWaiter(mWorkspace, mHotseat), 500);
+					
+					// Play
+					anim.startNow();
+				}
+			});
+			
 			XposedHelpers.findAndHookMethod(EVERYTHINGME_APPS_CUSTOMIZE_TAB_HOST, param.classLoader, "onFinishInflate", new XC_MethodHook() {
 				@Override
 				public void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
@@ -206,6 +233,25 @@ public class ModEverything implements IXposedHookLoadPackage, IXposedHookZygoteI
 			e1.printStackTrace();
 		}
 		return statusBarHeight;
+	}
+	
+	// Runnable to change visibility after animation
+	private class AnimationEndWaiter implements Runnable
+	{
+		private View mViews[];
+
+		public AnimationEndWaiter(View ... views) {
+			mViews = views;
+		}
+		
+		@Override
+		public void run() {
+			for (View v : mViews) {
+				v.clearAnimation();
+				v.setVisibility(View.INVISIBLE);
+			}
+		}
+		
 	}
 
 }
