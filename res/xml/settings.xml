@@ -10,4 +10,8 @@
 		android:key="iconpack"
 		android:title="@string/iconpack_title" />
 	
+	<Preference
+		android:key="about"
+		android:title="@string/about_title" />
+	
 </PreferenceScreen>

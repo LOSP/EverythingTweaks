@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<Preference
+		android:key="about_version"
+		android:title="@string/about_version" />
+	
+	<Preference
+		android:key="about_website"
+		android:title="@string/about_website_title"
+		android:summary="@string/about_website_url" />
+	
+</PreferenceScreen>

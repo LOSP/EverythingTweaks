@@ -15,6 +15,7 @@ public class EverythingSettings extends Activity
 	public static final int FRAGMENT_SETTINGS = 0;
 	public static final int FRAGMENT_INTERFACE = 1;
 	public static final int FRAGMENT_ICONPACK = 2;
+	public static final int FRAGMENT_ABOUT = 3;
 	
 	private FragmentManager mManager;
 	
@@ -35,6 +36,7 @@ public class EverythingSettings extends Activity
 		mFragments.add(FRAGMENT_SETTINGS, new SettingsFragment());
 		mFragments.add(FRAGMENT_INTERFACE, new InterfaceFragment());
 		mFragments.add(FRAGMENT_ICONPACK, new IconPackFragment());
+		mFragments.add(FRAGMENT_ABOUT, new AboutFragment());
 		
 		// Switch to default
 		switchTo(FRAGMENT_SETTINGS);

@@ -8,9 +8,11 @@ public class SettingsFragment extends BaseFragment
 {
 	private static final String INTERFACE = "interface";
 	private static final String ICONPACK = "iconpack";
+	private static final String ABOUT = "about";
 	
 	private Preference mInterface;
 	private Preference mIconPack;
+	private Preference mAbout;
 	
 	@Override
 	protected void initPreferences() {
@@ -20,11 +22,13 @@ public class SettingsFragment extends BaseFragment
 		// Get all the prefs
 		mInterface = findPreference(INTERFACE);
 		mIconPack = findPreference(ICONPACK);
+		mAbout = findPreference(ABOUT);
 		
 		// Register
 		registerPreferences(new Preference[] {
 			mInterface,
-			mIconPack
+			mIconPack,
+			mAbout
 		});
 	}
 
@@ -41,6 +45,9 @@ public class SettingsFragment extends BaseFragment
 			return true;
 		} else if (preference == mIconPack) {
 			switchTo(EverythingSettings.FRAGMENT_ICONPACK);
+			return true;
+		} else if (preference == mAbout) {
+			switchTo(EverythingSettings.FRAGMENT_ABOUT);
 			return true;
 		} else {
 			return false;

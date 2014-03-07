@@ -29,5 +29,11 @@ Trebuchet(CyanogenMod)"</string>
 	
 	<!-- Messages -->
 	<string name="msg_restart">Changes will take effect after restarting launcher</string>
+	
+	<!-- About -->
+	<string name="about_title">About</string>
+	<string name="about_version">EverythingTweaks Version</string>
+	<string name="about_website_title">Home Page</string>
+	<string name="about_website_url">http://losp.info</string>
 
 </resources>

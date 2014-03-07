@@ -29,4 +29,10 @@ Trebuchet(CyanogenMod)"</string>
 	<!-- Messages -->
 	<string name="msg_restart">设置将在重新启动启动器后生效</string>
 	
+	<!-- About -->
+	<string name="about_title">关于</string>
+	<string name="about_version">EverythingTweaks 版本</string>
+	<string name="about_website_title">主页</string>
+	<string name="about_website_url">http://shandian.us</string>
+	
 </resources>
